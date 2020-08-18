@@ -6,15 +6,6 @@ import App from './App';
 // import jquery from './jquery.min.js'
 // import * as serviceWorker from './serviceWorker';
 
-/*
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-);
-*/
-
 ReactDOM.render(<App />, document.querySelector("#root"))
 
 // If you want your app to work offline and load faster, you can change
