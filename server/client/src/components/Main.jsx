@@ -39,6 +39,7 @@ class Main extends React.Component {
       data.append('fileType', mType)
 
       if (mType && mType === 'video') {
+        console.log('posting vid ')
         fetch('http://localhost:5000/upload', { method: 'POST', body: data })
           .then((response) => response.blob())
           .then((blob) => {
@@ -47,6 +48,8 @@ class Main extends React.Component {
             // get video url from blob & set video url in app state for rendering
             this.setState({ videoUrl: URL.createObjectURL(blob) })
           })
+
+        console.log('awaiting file processing...')
       }
       // if image render processed file
       else if (mType && mType === 'image') {
@@ -80,7 +83,7 @@ class Main extends React.Component {
       <div className="container-fluid customMaxWidth">
         <div className="row">
           <div className="col-10 offset-1">
-            <h3 id="logoHeader">Face-Replace</h3>
+            <h3 id="logoHeader"></h3>
             <form id="mainForm" onSubmit={this.handleUpload}>
               <p className="pInstructions">1. Choose an image or video to upload by clicking Select File </p>
               <div>
@@ -106,8 +109,8 @@ class Main extends React.Component {
                   onChange={this.handleSelect}
                 >
                   <option value="solid">box</option>
-                  <option value="blur">blur</option>
                   <option value="emoji" defaultValue="selected">emoji</option>
+                  <option value="blur">blur</option>
                 </select>
               </div>
               <br />

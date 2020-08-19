@@ -1,7 +1,7 @@
 import random
 
 
-def get_emoji_size_path(h, w):
+def get_emoji_size(h, w):
     if h < 57 or w < 57:
         # 37px imgs
         return "small-small/"
@@ -19,7 +19,7 @@ def get_emoji_size_path(h, w):
         return False
 
 
-def select_random_emoji():
+def select_emoji():
     emojis = [
         "surprise.png",
         "sadness.png",
@@ -31,3 +31,7 @@ def select_random_emoji():
     emoji = random.sample(emojis, 1)[0]
 
     return emoji
+
+
+if __name__ == "__main__":
+    main()

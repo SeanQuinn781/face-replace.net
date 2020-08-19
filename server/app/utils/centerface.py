@@ -201,3 +201,7 @@ class CenterFace:
                     suppressed[j] = True
         keep = np.nonzero(suppressed == 0)[0]
         return keep
+
+
+if __name__ == "__main__":
+    main()

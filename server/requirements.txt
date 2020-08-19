@@ -34,7 +34,7 @@ networkx==2.4
 numpy==1.19.1
 onnx==1.7.0
 # note this version may need to be tweaked for different systems
-onnxruntime # ==1.4.0
+onnxruntime==1.4.0
 opencv-python==4.4.0.42
 packaging==20.4
 pandas==1.1.0
