@@ -10,11 +10,7 @@ from colorama import Fore, Style
 from .centerface import CenterFace
 from .emoji import get_emoji_size, select_emoji
 
-# from app import video_detect
 
-# TODO: Optionally preserve audio track?
-
-# refactor scaling (mask scale isnt used here)
 def scale_bb(x1, y1, x2, y2, mask_scale=1.0):
     s = mask_scale - 1.0
     h, w = y2 - y1, x2 - x1
@@ -75,7 +71,7 @@ def draw_replacements(
             emoji_scale = face_height
 
         try:
-            scaled_img = cv2.resize(emoji_img, (emoji_scale, emoji_scale))
+            scaled_emoji = cv2.resize(emoji_img, (emoji_scale, emoji_scale))
         except cv2.error as e:
             print(Fore.RED + "Invalid frame!")
 
@@ -87,8 +83,8 @@ def draw_replacements(
         ey, ex = skimage.draw.ellipse(
             (y2 - y1) // 2, (x2 - x1) // 2, (y2 - y1) // 2, (x2 - x1) // 2
         )
-
-        roibox[ey, ex] = scaled_img[ey, ex]
+        # Apply bounding box ellipse it to the emoji
+        roibox[ey, ex] = scaled_emoji[ey, ex]
 
         frame[y1:y2, x1:x2] = roibox
 
@@ -148,7 +144,6 @@ def image_detect(
     frame = imageio.imread(ipath)
     # Perform network inference, get bb dets but discard landmark predictions
     dets, _ = centerface(frame, threshold=threshold)
-    # TODO loop over dets here, select emoji
     process_frame(
         dets,
         frame,
@@ -158,10 +153,6 @@ def image_detect(
         ellipse=ellipse,
     )
     imageio.imsave(opath, frame)
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":

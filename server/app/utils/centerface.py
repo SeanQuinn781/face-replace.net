@@ -1,3 +1,4 @@
+# remove onxx imports if using opencv backend
 import onnx
 import onnx.utils
 import onnxruntime
@@ -21,26 +22,24 @@ class CenterFace:
             onnx_path = default_onnx_path
 
         if backend == "auto":
-            try:
-                # import onnx
-                # import onnxruntime
+           try:
+                import onnx
+                import onnxruntime
+                backend = 'onnxrt'
 
-                backend = "onnxrt"
             except:
                 # TODO: Warn when using a --verbose flag
-                print(
-                    Fore.RED
-                    + "Failed to import onnx or onnxruntime. Falling back to slower OpenCV backend."
-                )
-                backend = "opencv"
+                # print('Failed to import onnx or onnxruntime. Falling back to slower OpenCV backend.')
+                backend = 'opencv'
+
         self.backend = backend
 
         if self.backend == "opencv":
             self.net = cv2.dnn.readNetFromONNX(onnx_path)
         elif self.backend == "onnxrt":
-            # import onnx
-            # import onnx.utils
-            # import onnxruntime
+            import onnx
+            import onnx.utils
+            import onnxruntime
 
             print(Fore.BLUE + "self.backend is onnxrt")
             # Silence warnings about unnecessary bn initializers

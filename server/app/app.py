@@ -23,8 +23,6 @@ from colorama import Fore, Style
 from .utils.centerface import CenterFace
 from .utils.handle_frames import draw_replacements, process_frame, image_detect
 
-# TODO validation
-# from .allowedFile import allowedFileExtension, allowedFileType
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -34,12 +32,9 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 with open("./config.json") as f:
     config = json.load(f)
 app.config.update(config)
-# app.debug = True
-# used to set env to development since that is preferred over setting it in config file
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
-# set the client's upload folder to the static dir, making contents accessible
-# on the client side
+# set the client's upload folder to the flask static dir
 app.config["DEBUG"] = True
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 # Expose cors headers to enable file download
@@ -50,11 +45,8 @@ CORS(app, expose_headers="Authorization")
 def fileUpload():
     if request.method == "POST":
         if "file" not in request.files:
-            flash("No file part")
+            print("No file uploaded")
             return redirect(request.url)
-        file = request.files["file"]
-        if file.filename == "":
-            flash("No selected file")
 
     f_path = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
     if not os.path.isdir(f_path):
@@ -65,10 +57,7 @@ def fileUpload():
     filename = secure_filename(file.filename)
     mime_type = file.content_type
 
-    # validFileType = allowedFileType(mime_type)
-    # if not allowedFileExtension(file.filename) or validFileType == False:
     destination = "/".join([f_path, filename])
-    # need this? save in memory or session instead?
     file.save(destination)
     file_length = os.stat(destination).st_size
     session["uploadFilePath"] = destination
@@ -111,12 +100,6 @@ def fileUpload():
         return ""
 
 
-@app.route("/download/<path:filename>", methods=["GET", "POST"])
-def download(filename):
-    uploads = os.path.join(current_app.root_path, app.config["UPLOAD_FOLDER"])
-    return send_from_directory(directory=uploads, filename=filename)
-
-
 @app.route("/", defaults={"u_path": ""})
 @app.route("/<path:u_path>")
 def catch_all(u_path):
@@ -150,12 +133,9 @@ def video_detect(
         return
 
     read_iter = reader.iter_data()
-    print("read iter is ", read_iter)
     nframes = reader.count_frames()
-    print("n frames is ", nframes)
     print("initializing frame sessions")
     session["frames"] = nframes
-    print("session frames ", session["frames"])
     print(Fore.GREEN + "Step 3: Process Frames and Draw Replacements")
     if nested:
         bar = tqdm.tqdm(dynamic_ncols=True, total=nframes, position=1, leave=True)
@@ -168,11 +148,8 @@ def video_detect(
         )
     for frame in enumerate(read_iter):
         frame_index, current_frame = frame
-        # Store session value here for rendering progress on frontend
-        session["frame"] = frame_index
         # Perform network inference, get bb dets but discard landmark predictions
         dets, _ = centerface(current_frame, threshold=threshold)
-        # TODO: refactor with loop over dets here, select emoji
         process_frame(
             dets,
             current_frame,
@@ -200,17 +177,12 @@ def face_replace(file, file_options, filetype, emoji):
     threshold = 0.2
     ellipse = True
     mask_scale = 1.3
-    # TODO: debug auto codec
-    # ffmpeg_config = {"codec": "libx264"}
     ffmpeg_config = {}
-    # TODO pass backend from .env file or front end
-    # backend = "auto"
     backend = "auto"
     in_shape = None
     if in_shape is not None:
         w, h = in_shape.split("x")
         in_shape = int(w), int(h)
-        # TODO: this is never used
 
     # TODO: scalar downscaling setting (-> in_shape), preserving aspect ratio
     centerface = CenterFace(in_shape=in_shape, backend=backend)
