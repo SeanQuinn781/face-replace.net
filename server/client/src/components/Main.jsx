@@ -27,7 +27,6 @@ class Main extends React.Component {
     if (this.uploadInput.files[0].name) {
 
       // Display loading animation until file has been sent to backend and finished processing
-      // TODO: More detail about file processing progress from backend
       this.setState({ fileProcessing: true })
 
       // Check mimetype, determine if upload media is an img or video
@@ -106,9 +105,9 @@ class Main extends React.Component {
                   value={this.state.fileOptions}
                   onChange={this.handleSelect}
                 >
-                  <option value="emoji" defaultValue="selected">emoji</option>
                   <option value="solid">box</option>
                   <option value="blur">blur</option>
+                  <option value="emoji" defaultValue="selected">emoji</option>
                 </select>
               </div>
               <br />
