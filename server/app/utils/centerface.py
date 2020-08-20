@@ -18,19 +18,16 @@ class CenterFace:
         self.in_shape = in_shape
         self.onnx_input_name = "input.1"
         self.onnx_output_names = ["537", "538", "539", "540"]
+
         if onnx_path is None:
             onnx_path = default_onnx_path
 
         if backend == "auto":
-           try:
-                import onnx
-                import onnxruntime
-                backend = 'onnxrt'
 
-            except:
-                # TODO: Warn when using a --verbose flag
-                # print('Failed to import onnx or onnxruntime. Falling back to slower OpenCV backend.')
-                backend = 'opencv'
+            backend = "onnxrt"
+            print(
+                "attempting to use onnxrt, if its not compatible with your system, change 'backend' to opencv"
+            )
 
         self.backend = backend
 

@@ -36,7 +36,7 @@ env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
 # set the client's upload folder to the flask static dir
 app.config["DEBUG"] = True
-app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
+# app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 # Expose cors headers to enable file download
 CORS(app, expose_headers="Authorization")
 
