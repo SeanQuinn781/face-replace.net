@@ -9,7 +9,7 @@ import glob
 import json
 import mimetypes
 import random
-import os
+import time
 import sys
 
 #  deps for processing media
@@ -53,21 +53,25 @@ def fileUpload():
         os.mkdir(f_path)
 
     file = request.files["file"]
-    file_options = request.form.get("fileOptions")
+    file_replacement = request.form.get("replacement")
+    file_scale = request.form.get("scale")
     filename = secure_filename(file.filename)
-    mime_type = file.content_type
 
     destination = "/".join([f_path, filename])
     file.save(destination)
     file_length = os.stat(destination).st_size
     session["uploadFilePath"] = destination
     mime = mimetypes.guess_type(destination)[0]
+
+    print("mime is ", mime)
     if mime is None:
         return None
 
     processed_file_title = filename.split(".")[0]
     processed_file_ext = filename.split(".")[1]
-    processed_file_name = f"{processed_file_title}_{file_options}.{processed_file_ext}"
+    processed_file_name = (
+        f"{processed_file_title}_{file_replacement}.{processed_file_ext}"
+    )
 
     session["processedFileName"] = processed_file_name
 
@@ -80,18 +84,18 @@ def fileUpload():
     }
 
     if mime.startswith("video"):
-        if file_options == "emoji":
+        if file_replacement == "emoji":
             emoji["type"] = "video"
         face_replace(
-            destination, file_options, "video", emoji,
+            destination, file_replacement, "video", emoji, file_scale,
         )
         return send_from_directory(f_path, processed_file_name, as_attachment=True)
 
     elif mime.startswith("image"):
-        if file_options == "emoji":
+        if file_replacement == "emoji":
             emoji["type"] = "image"
         face_replace(
-            destination, file_options, "image", emoji,
+            destination, file_replacement, "image", emoji, file_scale,
         )
         return send_from_directory(f_path, processed_file_name, as_attachment=True)
 
@@ -108,7 +112,6 @@ def catch_all(u_path):
     return "ok"
 
 
-# moved this into app from face_replace to attempt to track frame processing progress, and pass to front end
 def video_detect(
     ipath: str,
     opath: str,
@@ -150,6 +153,7 @@ def video_detect(
         frame_index, current_frame = frame
         # Perform network inference, get bb dets but discard landmark predictions
         dets, _ = centerface(current_frame, threshold=threshold)
+
         process_frame(
             dets,
             current_frame,
@@ -168,23 +172,28 @@ def video_detect(
     bar.close()
 
 
-def face_replace(file, file_options, filetype, emoji):
+def face_replace(file, file_replacement, filetype, emoji, file_scale):
     print(Fore.GREEN + "Step 1 Processing file... ", file)
     ipaths = [file]
     base_opath = None
-    replacewith = file_options
+    replacewith = file_replacement
     emoji = emoji
     threshold = 0.2
     ellipse = True
     mask_scale = 1.3
     ffmpeg_config = {}
     backend = "auto"
-    in_shape = None
-    if in_shape is not None:
+    in_shape = file_scale
+    default_scale = in_shape == "default"
+    if not default_scale:
         w, h = in_shape.split("x")
         in_shape = int(w), int(h)
+        print("scaling to ", in_shape)
+    else:
+        in_shape = None
 
     # TODO: scalar downscaling setting (-> in_shape), preserving aspect ratio
+    # Downscale images for network inference to this size
     centerface = CenterFace(in_shape=in_shape, backend=backend)
 
     multi_file = len(ipaths) > 1
@@ -197,7 +206,7 @@ def face_replace(file, file_options, filetype, emoji):
         opath = base_opath
         if opath is None:
             root, ext = os.path.splitext(ipath)
-            opath = f"{root}_{file_options}{ext}"
+            opath = f"{root}_{file_replacement}{ext}"
         print(Fore.BLUE + f"Input:  {ipath}\nOutput: {opath}")
         if opath is None:
             print(Fore.RED + "No output file is specified, no output will be produced.")

@@ -5,6 +5,7 @@ import './bootstrap.min.css';
 import App from './App';
 // import jquery from './jquery.min.js'
 // import * as serviceWorker from './serviceWorker';
+// Note: this JS is also inline in index.html to avoid extra request from flask
 
 ReactDOM.render(<App />, document.querySelector("#root"))
 

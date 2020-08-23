@@ -9,15 +9,17 @@ class Main extends React.Component {
     super(props);
     this.state = {
       mediaURL: "Pending Upload",
-      fileOptions: "blur",
       fileUploaded: false,
       fileProcessing: false,
       videoUrl: false,
       imageUrl: false,
+      replacement: 'emoji',
+      scale: 'default',
+      quality: 'default',
     };
 
     this.handleUpload = this.handleUpload.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   handleUpload(e) {
@@ -33,11 +35,16 @@ class Main extends React.Component {
 
       // Check mimetype, determine if upload media is an img or video
       let mType = MimeType.lookup(this.uploadInput.files[0].name)
+      if (mType === false) {
+        console.log('Unable to detect mimetype, assume its a video file, check in backend')
+        mType = "video/unknown"
+      }
       mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
 
       data.append('file', this.uploadInput.files[0]);
       data.append('filename', this.fileName.value);
-      data.append('fileOptions', this.state.fileOptions);
+      data.append('scale', this.state.scale);
+      data.append('replacement', this.state.replacement);
       data.append('fileType', mType)
 
       if (mType && mType === 'video') {
@@ -51,7 +58,7 @@ class Main extends React.Component {
             this.setState({ videoUrl: URL.createObjectURL(blob) })
           })
       }
-      // if image render processed file 
+      // if image render processed file
       else if (mType && mType === 'image') {
         fetch('http://localhost:5000/upload', { method: 'POST', body: data })
           .then(response => response.blob())
@@ -62,7 +69,7 @@ class Main extends React.Component {
               let contents = reader.result;
               // hide loading animation
               this.setState({ fileProcessing: false })
-              // 
+              //
               this.setState({ imageUrl: contents })
             })
             // pass valid blob to FileReader
@@ -72,9 +79,8 @@ class Main extends React.Component {
     }
   }
 
-  handleSelect(e) {
-    const fileOptions = e.target.value;
-    this.setState({ fileOptions: fileOptions });
+  handleSelectChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -82,10 +88,10 @@ class Main extends React.Component {
     return (
       <div className="container-fluid customMaxWidth">
         <div className="row">
-          <div className="col-10 offset-1">
-            <h3 id="logoHeader"></h3>
+          <div className="col-12 ">
+            <h3 id="logoHeader" class="mt-4">Face-Replace</h3>
             <form id="mainForm" onSubmit={this.handleUpload}>
-              <p className="pInstructions">1. Choose an image or video to upload by clicking Select File </p>
+              <p className="pInstructions my-4">1. Choose an image or video to upload by clicking Select File </p>
               <div>
                 <input
                   type="file"
@@ -98,23 +104,35 @@ class Main extends React.Component {
                   }}
                 />
               </div>
-              <br />
-              <p className="pInstructions mb-4">2. Choose an effect to replace faces with</p>
+              <p className="pInstructions my-4">2. Choose an effect to replace faces with</p>
               <div>
                 <select
                   name="replacement"
                   id="replacement"
                   className="MuiButton-label customSelect"
-                  value={this.state.fileOptions}
-                  onChange={this.handleSelect}
+                  value={this.state.replacement}
+                  onChange={this.handleSelectChange}
                 >
                   <option value="solid">box</option>
                   <option value="emoji" defaultValue="selected">emoji</option>
                   <option value="blur">blur</option>
                 </select>
               </div>
-              <br />
-              <p className="pInstructions mb-2 mt-2">3. Click UPLOAD to replace faces</p>
+              <p className="pInstructions my-4">3. Select scale scale resolution for faster processing</p>
+              <div>
+                <select
+                  name="scale"
+                  id="scale"
+                  className="MuiButton-label customSelect"
+                  value={this.state.scale}
+                  onChange={this.handleSelectChange}
+                >
+                  <option value="default">Default </option>
+                  <option value="1366x768">Med: 800x600</option>
+                  <option value="640x360" defaultValue="selected">Sm: 640x360</option>
+                </select>
+              </div>
+              <p className="pInstructions my-4">4. Click upload to replace faces</p>
               <div>
                 <Button
                   variant="contained"
@@ -126,7 +144,7 @@ class Main extends React.Component {
                </Button>
                 <br />
               </div>
-              <p className="pInstructions mb-2 mt-2">4. View Processed media</p>
+              <p className="pInstructions my-4">5. View Processed media</p>
               {this.state.videoUrl &&
                 <video autoPlay controls>
                   <source

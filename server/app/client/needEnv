@@ -1,6 +1,0 @@
-PORT=3000
-BROWSER=none
-
-
-  "proxy": "http://localhost:5000",
-
