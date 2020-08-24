@@ -78,9 +78,9 @@ class CenterFace:
     def __call__(self, img, threshold=0.5):
         self.orig_shape = img.shape[:2]
         if self.in_shape is None:
-            print('self.in_shape is none')
+            print("self.in_shape is none")
             self.in_shape = self.orig_shape[::-1]
-            print('self.in_shape set to ', self.in_shape)
+            print("self.in_shape set to ", self.in_shape)
         if not hasattr(self, "h_new"):  # First call, need to compute sizes
             self.w_new, self.h_new, self.scale_w, self.scale_h = self.transform(
                 self.in_shape

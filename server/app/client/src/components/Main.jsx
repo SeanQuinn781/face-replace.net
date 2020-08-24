@@ -161,6 +161,9 @@ class Main extends React.Component {
               }
               {this.state.fileProcessing &&
                 <>
+                  <br />
+                  <p>File is Processing</p>
+
                   <div
                     style={{
                       width: "100%",
@@ -172,7 +175,7 @@ class Main extends React.Component {
                   >
                     <Loader className="loader" type="ThreeDots" color="#2BAD60" height="100" width="100" />
                     <br />
-                    <p>File is Processing</p>
+
                   </div>
                 </>
               }
