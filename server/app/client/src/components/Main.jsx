@@ -14,8 +14,7 @@ class Main extends React.Component {
       videoUrl: false,
       imageUrl: false,
       replacement: 'emoji',
-      scale: 'default',
-      quality: 'default',
+      scale: '640x360',
     };
 
     this.handleUpload = this.handleUpload.bind(this);
@@ -89,7 +88,7 @@ class Main extends React.Component {
       <div className="container-fluid customMaxWidth">
         <div className="row">
           <div className="col-12 ">
-            <h3 id="logoHeader" class="mt-4">Face-Replace</h3>
+            <h3 id="logoHeader" className="mt-4" alt="logoHeader">Face-Replace</h3>
             <form id="mainForm" onSubmit={this.handleUpload}>
               <p className="pInstructions my-4">1. Choose an image or video to upload by clicking Select File </p>
               <div>
@@ -112,6 +111,7 @@ class Main extends React.Component {
                   className="MuiButton-label customSelect"
                   value={this.state.replacement}
                   onChange={this.handleSelectChange}
+                  defaultValue={"emoji"}
                 >
                   <option value="solid">box</option>
                   <option value="emoji" defaultValue="selected">emoji</option>
@@ -126,10 +126,11 @@ class Main extends React.Component {
                   className="MuiButton-label customSelect"
                   value={this.state.scale}
                   onChange={this.handleSelectChange}
+                  defaultValue={"640x360"}
                 >
-                  <option value="default">Default </option>
-                  <option value="1366x768">Med: 800x600</option>
-                  <option value="640x360" defaultValue="selected">Sm: 640x360</option>
+                  <option value="default">Original Size</option>
+                  <option value="1366x768">1366x768</option>
+                  <option value="640x360">640x360</option>
                 </select>
               </div>
               <p className="pInstructions my-4">4. Click upload to replace faces</p>
@@ -160,8 +161,6 @@ class Main extends React.Component {
               }
               {this.state.fileProcessing &&
                 <>
-                  <p>File is Processing</p>
-                  <br />
                   <div
                     style={{
                       width: "100%",
@@ -172,6 +171,8 @@ class Main extends React.Component {
                     }}
                   >
                     <Loader className="loader" type="ThreeDots" color="#2BAD60" height="100" width="100" />
+                    <br />
+                    <p>File is Processing</p>
                   </div>
                 </>
               }

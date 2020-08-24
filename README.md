@@ -8,6 +8,12 @@
 
 ================================================================================
 
+![FaceReplace Demo](/demos/emojiCrowd.jpeg)
+![FaceReplace Demo 2](/demos/homealone2_emoji.mp4)
+![FaceReplace Demo 3](/demos/IndependenceDayRooftop_emoji.mkv)
+
+
+
 # Overview
 
   A simple app adapting the <a href="link">deface</a> module from CLI format to
