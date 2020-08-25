@@ -1,13 +1,13 @@
 FaceReplace
 
 ![FaceReplace Demo](/demos/emojiCrowd.jpeg)
+![FaceReplace Demo2](/demos/IndependenceDayEmoji640x360.gif)
 
 Video demos coming soon
 
 # Overview
 
-  A simple app adapting the <a href="link">deface</a> module from CLI format to
-  a simple flask web app.
+  React Flask GUI app to replace faces in Video or Images with Emojis, Boxes or Blur. Uses Centerface & Deface for facial recognition and ImageIO for image processing. Originally adapted from the <a href="link">deface</a> module from CLI format to a simple flask web app.
 
 # Installation
 
@@ -31,7 +31,7 @@ Video demos coming soon
   Install and run the Client:
 
   '''
-  cd client && npm upgrade && npm install
+  cd face-replace/server/app/client && npm upgrade && npm install
   '''
 
   Run the Client:
