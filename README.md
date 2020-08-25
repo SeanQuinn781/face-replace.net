@@ -1,7 +1,7 @@
 FaceReplace
 
-![FaceReplace Demo](/demos/emojiCrowd.jpeg)
-![FaceReplace Demo2](/demos/IndependenceDayEmoji640x360.gif)
+![FaceReplace Demo](/demos/IndependenceDayEmoji640x360.gif)
+![FaceReplace Demo2](/demos/emojiCrowd.jpeg)
 
 Video demos coming soon
 
