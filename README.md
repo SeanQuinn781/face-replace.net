@@ -1,9 +1,12 @@
 FaceReplace
 
-![FaceReplace Demo](/demos/IndependenceDayEmoji640x360.gif)
-![FaceReplace Demo2](/demos/emojiCrowd2.jpeg)
 
-Video demos coming soon
+![FaceReplace Demo1](/demos/homealone2_1min-2_30min_emoji.gif)
+![FaceReplace Demo2](/demos/IndependenceDayEmoji640x360.gif)
+![FaceReplace Demo3](/demos/emojiCrowd2.jpeg)
+
+# commented out to save README.md loading time in browser ![FaceReplace Demo1](/demos/homealone2_1min_emoji.gif)
+
 
 # Overview
 
