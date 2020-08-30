@@ -5,8 +5,6 @@ FaceReplace
 ![FaceReplace Demo2](/demos/IndependenceDayEmoji640x360.gif)
 ![FaceReplace Demo3](/demos/emojiCrowd2.jpeg)
 
-# commented out to save README.md loading time in browser ![FaceReplace Demo1](/demos/homealone2_1min_emoji.gif)
-
 
 # Overview
 
