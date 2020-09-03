@@ -6,7 +6,7 @@ cycler==0.10.0
 decorator==4.4.2
 ffmpeg==1.4
 Flask==1.1.2
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-Session==0.3.2
 imageio==2.9.0
 imageio-ffmpeg==0.4.2
