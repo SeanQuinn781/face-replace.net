@@ -58,7 +58,8 @@ def draw_replacements(
             if not emoji["resolved"]:
                 emoji["resolved"] = True
                 emoji["selected"] = select_emoji()
-
+            if not len(emoji["selected"]) > 2:
+                print("no emoji selected, emoji is ", emoji)
         # combine emoji and path, read image with cv2
         emoji_location = emoji["path"] + emoji["selected"]
         emoji_img = cv2.imread(emoji_location)
@@ -66,17 +67,25 @@ def draw_replacements(
 
         # use the greater dim from face to determine emoji height / width
         if face_width > face_height:
+            alt_dimension = face_height
             emoji_scale = face_width
+            try:
+                scaled_emoji = cv2.resize(emoji_img, (emoji_scale, alt_dimension))
+            except cv2.error as e:
+                print(Fore.RED + "Invalid frame!")
+            # wait until the resize has completed before moving on
+            cv2.waitKey()
+
         else:
+            alt_dimension = face_width
             emoji_scale = face_height
 
-        try:
-            scaled_emoji = cv2.resize(emoji_img, (emoji_scale, emoji_scale))
-        except cv2.error as e:
-            print(Fore.RED + "Invalid frame!")
-
-        # wait until the resize has completed before moving on
-        cv2.waitKey()
+            try:
+                scaled_emoji = cv2.resize(emoji_img, (alt_dimension, emoji_scale))
+            except cv2.error as e:
+                print(Fore.RED + "Invalid frame!")
+            # wait until the resize has completed before moving on
+            cv2.waitKey()
 
         roibox = frame[y1:y2, x1:x2]
         # Get y and x coordinate lists of the "bounding ellipse"
