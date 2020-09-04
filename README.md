@@ -1,11 +1,11 @@
 FaceReplace
 
-Demo of video with emoji replacements (Home Alone 2 trailer)
+Demo of video with a random emoji used in each frame as replacements (Home Alone 2 trailer)
 ![FaceReplace Demo1](/demos/homealone2_1min-2_30min_emoji.gif)
 
 Screen shot of the React front end (for uploading images or video)
 <img src="demos/face-replace-frontend.png" />
-Demo of video with emoji replacements. (Scene from Independence Day)
+Demo of video with a single emoji used in each frame for replacements. (Scene from Independence Day)
 
 ![FaceReplace Demo2](/demos/IndependenceDayRooftop_emoji.gif)
 
