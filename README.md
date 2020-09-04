@@ -7,7 +7,7 @@ Screen shot of the React front end (for uploading images or video)
 <img src="demos/face-replace-frontend.png" />
 Demo of video with emoji replacements. (Scene from Independence Day)
 
-![FaceReplace Demo2](/demos/IndependenceDayEmoji640x360.gif)
+![FaceReplace Demo2](/demos/IndependenceDayRooftop_emoji.gif)
 
 Demo of image, large crowd with emoji replacements 
 <img src="demos/crowd_emoji.jpeg" align="center" />
@@ -17,7 +17,7 @@ Demo of image, large crowd with blur effect
 <img src="demos/crowd_blurred.jpeg" align="center" />
 
 Demo of image, large crowd with boxes effect
-<img src="demos/crowd_blurred.jpeg" align="center" />
+<img src="demos/crowd_boxes.jpeg" align="center" />
 
 # Overview
 
