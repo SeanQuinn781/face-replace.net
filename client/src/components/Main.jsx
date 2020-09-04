@@ -17,8 +17,6 @@ class Main extends React.Component {
       scale: '640x360',
     };
 
-    // this.handleUpload = this.handleUpload.bind(this);
-    // this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
 

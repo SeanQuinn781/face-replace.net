@@ -2,15 +2,22 @@ FaceReplace
 
 Demo of video with emoji replacements (Home Alone 2 trailer)
 ![FaceReplace Demo1](/demos/homealone2_1min-2_30min_emoji.gif)
-Screen shot of the react front end uploader for uploading images or video
-![FaceReplace Frontend Uploader](/demos/face-replace-frontend.png)
-Demo of video with emoji replacements (Scene from Independence Day)
+
+Screen shot of the React front end (for uploading images or video)
+<img src="demos/face-replace-frontend.png" />
+Demo of video with emoji replacements. (Scene from Independence Day)
+
 ![FaceReplace Demo2](/demos/IndependenceDayEmoji640x360.gif)
-Demo of image of a large crowd with emoji replacements 
-![FaceReplace Demo3](/demos/emojiCrowd2.jpeg)
 
-For demos of the box and blur effects, see the processed files under /demos
+Demo of image, large crowd with emoji replacements 
+<img src="demos/crowd_emoji.jpeg" align="center" />
+<img src="demos/crowd2_emoji.jpeg" align="center" />
 
+Demo of image, large crowd with blur effect
+<img src="demos/crowd_blurred.jpeg" align="center" />
+
+Demo of image, large crowd with boxes effect
+<img src="demos/crowd_blurred.jpeg" align="center" />
 
 # Overview
 
