@@ -19,32 +19,43 @@ class Main extends React.Component {
 
   }
 
+  handleError = (msg) => {
+    alert(msg)
+    return;
+  }
 
   handleUpload = (e) => {
 
     e.preventDefault();
     const data = new FormData();
-    this.setState({ fileProcessing: true })
 
-    if (this.uploadInput.files[0].name) {
+    // Make sure some files are actually being uploaded
+    if (this.uploadInput.files.length === 0) {
+      this.handleError('No files to upload, please upload an image or video file');
+    }
 
+    else if (this.uploadInput.files[0].name) {
       // Display loading animation until file has been sent to backend and finished processing
       this.setState({ fileProcessing: true })
 
       // Check mimetype, determine if upload media is an img or video
       let mType = MimeType.lookup(this.uploadInput.files[0].name)
-      if (mType === false) {
-        console.log('Unable to detect mimetype, assume its a video file, check in backend')
-        mType = "video/unknown"
-      }
-      mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
 
+      if (mType) {
+        mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
+      } else {
+        this.handleError('Unable to detect file mimetype in the uploader')
+      }
+
+      // Append form data to data obj before passing to flask
       data.append('file', this.uploadInput.files[0]);
       data.append('filename', this.fileName.value);
       data.append('scale', this.state.scale);
       data.append('replacement', this.state.replacement);
       data.append('fileType', mType)
 
+      // Processing of the flask response differs depending on the filetype
+      // (image or video) in order to render the finished results 
       if (mType && mType === 'video') {
 
         fetch('http://localhost:5000/upload', { method: 'POST', body: data })
@@ -74,6 +85,8 @@ class Main extends React.Component {
             if (blob instanceof Blob) reader.readAsDataURL(blob)
           })
       }
+    } else {
+      this.handleError('There was an error uploading the files.');
     }
   }
 

@@ -104,12 +104,18 @@ def fileUpload():
         return ""
 
 
-@app.route("/", defaults={"u_path": ""})
-@app.route("/<path:u_path>")
-def catch_all(u_path):
-    print("in catch_all, args are: ", sys.argv)
-    print(repr(u_path))
-    return "ok"
+# uncomment for debug
+# @app.route("/", defaults={"u_path": ""})
+# @app.route("/<path:u_path>")
+# def catch_all(u_path):
+#    print("in catch_all, args are: ", sys.argv)
+#    print(repr(u_path))
+#    return ""
+
+
+@app.route("/")
+def renderHome():
+    return redirect(request.url)
 
 
 def video_detect(
@@ -183,14 +189,17 @@ def face_replace(file, file_replacement, filetype, emoji, file_scale):
     mask_scale = 1.3
     ffmpeg_config = {}
     backend = "auto"
-    in_shape = file_scale
-    default_scale = in_shape == "default"
-    if not default_scale:
-        w, h = in_shape.split("x")
+    in_shape = None
+
+    if not file_scale == "default":
+        w, h = file_scale.split("x")
         in_shape = int(w), int(h)
-        print("scaling to ", in_shape)
-    else:
-        in_shape = None
+    elif file_scale == "default":
+        print("self.in_shape is none")
+        if filetype == "image":
+            img_dims = imageio.imread(ipaths[0])
+            w, h = img_dims.shape[:2]
+            in_shape = int(w), int(h)
 
     # TODO: scalar downscaling setting (-> in_shape), preserving aspect ratio
     # Downscale images for network inference to this size

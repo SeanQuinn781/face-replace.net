@@ -123,11 +123,15 @@ class CenterFace:
 
     def transform(self, in_shape):
         h_orig, w_orig = self.orig_shape
-        w_new, h_new = in_shape
-        # Make spatial dims divisible by 32
-        w_new, h_new = int(np.ceil(w_new / 32) * 32), int(np.ceil(h_new / 32) * 32)
-        scale_w, scale_h = w_new / w_orig, h_new / h_orig
-        return w_new, h_new, scale_w, scale_h
+
+        if in_shape == None:
+            return h_orig, w_orig, 1, 1
+        else:
+            w_new, h_new = in_shape
+            # Make spatial dims divisible by 32
+            w_new, h_new = int(np.ceil(w_new / 32) * 32), int(np.ceil(h_new / 32) * 32)
+            scale_w, scale_h = w_new / w_orig, h_new / h_orig
+            return w_new, h_new, scale_w, scale_h
 
     def decode(self, heatmap, scale, offset, landmark, size, threshold=0.1):
         heatmap = np.squeeze(heatmap)
