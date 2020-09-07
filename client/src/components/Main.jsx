@@ -121,7 +121,6 @@ class Main extends React.Component {
                   name="replacement"
                   id="replacement"
                   className="MuiButton-label customSelect"
-                  value={this.state.replacement}
                   onChange={this.handleSelectChange}
                   defaultValue={"emoji"}
                 >
@@ -136,7 +135,6 @@ class Main extends React.Component {
                   name="scale"
                   id="scale"
                   className="MuiButton-label customSelect"
-                  value={this.state.scale}
                   onChange={this.handleSelectChange}
                   defaultValue={"640x360"}
                 >
