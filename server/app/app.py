@@ -87,7 +87,11 @@ def fileUpload():
         if file_replacement == "emoji":
             emoji["type"] = "video"
         face_replace(
-            destination, file_replacement, "video", emoji, file_scale,
+            destination,
+            file_replacement,
+            "video",
+            emoji,
+            file_scale,
         )
         return send_from_directory(f_path, processed_file_name, as_attachment=True)
 
@@ -95,7 +99,11 @@ def fileUpload():
         if file_replacement == "emoji":
             emoji["type"] = "image"
         face_replace(
-            destination, file_replacement, "image", emoji, file_scale,
+            destination,
+            file_replacement,
+            "image",
+            emoji,
+            file_scale,
         )
         return send_from_directory(f_path, processed_file_name, as_attachment=True)
 
