@@ -87,14 +87,13 @@ Demo of image, large crowd with boxes effect
   required  variables for flask, while SECRET_KEY should be set in 
   config.json in the root directory
 
-  If installation of opencv-python hangs make sure you have a 
-  compiler installed and try:
+  If installation of opencv-python (in requirements.txt) try installing the dependencies with apt:
    
   '''
-  sudo apt install python-opencv
+  sudo apt install python-opencv python3-imageio python3-numpy -y
   '''
 
-  If you have any issues processing video files, install ffmpeg with:
+  Also install ffmpeg (required) on your system with:
 
   '''
   sudo apt install ffmpeg
@@ -104,7 +103,7 @@ Demo of image, large crowd with boxes effect
   package.json:
 
   "proxy" : "http://localhost:5000",
-  and setupProxy includes the correct path
+  and setupProxy includes the correct url / port
 
 
 --------------------------------------------------------------------------------
