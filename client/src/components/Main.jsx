@@ -44,7 +44,9 @@ class Main extends React.Component {
       if (mType) {
         mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
       } else {
-        this.handleError('Unable to detect file mimetype in the uploader')
+        // uncomment this to allow some filetypes regardless of mimetype detection failure (such as mkv)
+        // this.handleError('Unable to detect file mimetype in the uploader')
+        console.log('unable to detect mimetype in the uploader')
       }
 
       // Append form data to data obj before passing to flask
