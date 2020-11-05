@@ -1,6 +1,13 @@
 <img src="demos/logo.png" align="center" />
 
 
+# Description
+Simple react/ flask webapp that can be run fully locally for replacing all faces in images and video
+
+# Overview
+
+React Flask GUI app to replace faces frame by frame in Video or Images with Emojis, Boxes or Blur. Uses react for front end file uploading, api calls, and rendering processed media after making replacements. Centerface & Deface are used for facial recognition and ImageIO for image processing. Originally adapted from the <a href="https://www.github.com/ORB-HD/deface">deface</a> module from CLI format to a simple flask web app.
+
 Demo of video with emoji replacements (Home Alone 2 trailer)
 ![FaceReplace Demo1a](/demos/official-demo-1-emoji-optimized.gif)
 
@@ -25,10 +32,6 @@ Demo of image, large crowd with blur effect
 
 Demo of image, large crowd with boxes effect
 <img src="demos/crowd_boxes.jpeg" align="center" />
-
-# Overview
-
-  React Flask GUI app to replace faces frame by frame in Video or Images with Emojis, Boxes or Blur. Uses react for front end file uploading, api calls, and rendering processed media after making replacements. Centerface & Deface are used for facial recognition and ImageIO for image processing. Originally adapted from the <a href="https://www.github.com/ORB-HD/deface">deface</a> module from CLI format to a simple flask web app.
 
 # Installation
 
@@ -160,6 +163,21 @@ Demo of image, large crowd with boxes effect
 --------------------------------------------------------------------------------
 
 # Usage:
+
+Run the Flask API locally:
+```
+cd face-replace
+cd server
+flask run
+```
+
+Run the React Client locally:
+```
+cd face-replace
+cd client
+npm start
+```
+
 
   1. Open a browser and go to https://localhost:3000
   2. Upload a image or video file
