@@ -1,5 +1,7 @@
 FaceReplace
 
+Simple react/ flask webapp that can be run fully locally for replacing all faces in images and video
+
 Demo of video with emoji replacements (Home Alone 2 trailer)
 ![FaceReplace Demo1a](/demos/official-demo-1-emoji-optimized.gif)
 
