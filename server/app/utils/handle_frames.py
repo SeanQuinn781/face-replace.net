@@ -63,10 +63,7 @@ def draw_replacements(
         # combine emoji and path, read image with cv2
         emoji_location = emoji["path"] + emoji["selected"]
         emoji_img = cv2.imread(emoji_location)
-        (
-            emoji_height,
-            emoji_width,
-        ) = emoji_img.shape[:2]
+        (emoji_height, emoji_width,) = emoji_img.shape[:2]
 
         # use the greater dim from face to determine emoji height / width
         if face_width > face_height:

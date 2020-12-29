@@ -61,7 +61,7 @@ Demo of image, large crowd with boxes effect
   npm start
   '''
 
-  Create a file config.json in the root directory, and set a SECRET_KEY
+  Edit the file config.json in the server/ directory, and update the SECRET_KEY used for flask debugging. 
 
   {
       "SECRET_KEY": "exampleKey"
@@ -76,13 +76,6 @@ Demo of image, large crowd with boxes effect
   pip3 install -r requirements.txt
   '''
 
-  (Optional) upgrade requirements:
-
-  '''
-  pip3 install pur
-  pur -r requirements.txt
-  '''
-
   Run Flask:
 
   '''
@@ -94,7 +87,7 @@ Demo of image, large crowd with boxes effect
   required  variables for flask, while SECRET_KEY should be set in 
   config.json in the root directory
 
-  If installation of opencv-python (in requirements.txt) try installing the dependencies with apt:
+  If installation of opencv-python (in requirements.txt) hangs you can use ctrl c to stop the installation. The app should still work (tested on debian buster) as long as all the preceding packages are installed. Alternatively try installing the following dependencies with apt (or brew):
    
   '''
   sudo apt install python-opencv python3-imageio python3-numpy -y

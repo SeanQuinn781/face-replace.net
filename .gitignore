@@ -250,7 +250,6 @@ typings/
 .atom
 .eslintrc
 .sublime
-config.json
 # possible venv names
 app/venv
 server/app/fh

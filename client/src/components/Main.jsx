@@ -14,7 +14,7 @@ class Main extends React.Component {
       videoUrl: false,
       imageUrl: false,
       replacement: 'emoji',
-      scale: '640x360',
+      scale: 'default',
     };
 
   }
@@ -124,21 +124,23 @@ class Main extends React.Component {
                   id="replacement"
                   className="MuiButton-label customSelect"
                   onChange={this.handleSelectChange}
-                  defaultValue={"emoji"}
+                  defaultValue={this.state.replacement}
                 >
                   <option value="solid">box</option>
-                  <option value="emoji" defaultValue="selected">emoji</option>
+                  <option value="emoji">emoji</option>
                   <option value="blur">blur</option>
                 </select>
               </div>
               <p className="pInstructions my-4">3. Select scale scale resolution for faster processing</p>
+              <p className="pInstructions my-4">(To increase accuracy use original size)</p>
+
               <div>
                 <select
                   name="scale"
                   id="scale"
                   className="MuiButton-label customSelect"
                   onChange={this.handleSelectChange}
-                  defaultValue={"640x360"}
+                  defaultValue={this.state.scale}
                 >
                   <option value="default">Original Size</option>
                   <option value="1366x768">1366x768</option>
