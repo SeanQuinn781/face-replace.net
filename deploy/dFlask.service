@@ -1,0 +1,9 @@
+[Unit]
+Description = flask pyhton command to run app
+
+[Service]
+ExecStart = /home/ibex/Github/face-replace/server/runFlask.sh
+
+[Install]
+WantedBy = multi-user.target
+

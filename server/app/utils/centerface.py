@@ -8,7 +8,11 @@ import os
 import numpy as np
 import colorama
 from colorama import Fore, Style
+# cv2 import error fix
+import sys
 
+sys.path.append('/usr/local/lib/python2.7/site-packages')
+sys.path.append('/usr/local/lib/python3.7/site-packages')
 # Find file relative to the location of this code files
 default_onnx_path = f"{os.path.dirname(__file__)}/centerface.onnx"
 

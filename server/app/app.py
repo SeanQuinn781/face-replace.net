@@ -18,6 +18,7 @@ import imageio.plugins.ffmpeg
 import tqdm
 from typing import Dict
 import colorama
+import imghdr
 from colorama import Fore, Style
 
 from .utils.centerface import CenterFace
@@ -27,10 +28,12 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "static"
+UPLOAD_FOLDER = "/home/ibex/Github/face-replace/server/app/static"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-with open("./config.json") as f:
-    config = json.load(f)
+# with open(".config.json") as f:
+#    config = json.load(f)
+configVal = '{"SECRET_KEY": "vZ3HJbDJW2CgzA!"}'
+config = json.loads(configVal)
 app.config.update(config)
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
@@ -39,6 +42,15 @@ app.config["DEBUG"] = True
 # app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 # Expose cors headers to enable file download
 CORS(app, expose_headers="Authorization")
+
+
+def validate_image(stream):
+    header = stream.read(512)
+    stream.seek(0)
+    format = imghdr.what(None, header)
+    if not format:
+        return None
+    return "." + (format if format != "jpeg" else "jpg")
 
 
 @app.route("/upload", methods=["GET", "POST"])
@@ -56,6 +68,9 @@ def fileUpload():
     file_replacement = request.form.get("replacement")
     file_scale = request.form.get("scale")
     filename = secure_filename(file.filename)
+    file_ext = filename.split(".")[0]
+    if file_ext != validate_image(file.stream):
+        print("Failure: Image extension filetype not recognized")
 
     destination = "/".join([f_path, filename])
     file.save(destination)

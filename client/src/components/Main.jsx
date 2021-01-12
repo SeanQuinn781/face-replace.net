@@ -60,7 +60,11 @@ class Main extends React.Component {
       // (image or video) in order to render the finished results 
       if (mType && mType === 'video') {
 
-        fetch('http://localhost:5000/upload', { method: 'POST', body: data })
+        fetch('http://localhost:5000/upload', {
+          method: 'POST',
+          body: data,
+          mode: 'cors',
+        })
           .then((response) => response.blob())
           .then((blob) => {
             // hide loading animation

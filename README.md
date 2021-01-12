@@ -48,8 +48,7 @@ Demo of image, large crowd with boxes effect
     1. Required for videos only (you may be able to use python-ffmpeg or the imageio-ffmpeg extension
     2. python-opencv 
 
-
-  Install and run the Client:
+  Install the Client:
 
   '''
   cd face-replace/server/app/client && npm upgrade && npm install
@@ -72,9 +71,17 @@ Demo of image, large crowd with boxes effect
   '''
   cd server
   python3 -m venv venv
+  pip3 install --upgrade pip
   source venv/bin/activate
   pip3 install -r requirements.txt
   '''
+
+  Note: if installation of onnx hangs in pip try:
+
+  ```
+  sudo apt-get install protobuf-compiler libprotoc-dev pip install onnx
+  ```
+
 
   Run Flask:
 

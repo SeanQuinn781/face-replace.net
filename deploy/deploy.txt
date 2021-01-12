@@ -1,0 +1,19 @@
+To run as the server as daemon service on a linux system:
+
+1. Copy dFlask.service to /etc/systemd/system
+
+2. Run the server:
+
+```
+sudo service dFlask start
+```
+
+3. Run the client:
+enter the client directory and run:
+
+```
+sudo ./runReact.sh
+```
+
+
+TODO: debug dReact.service (there is a formatting error when trying to run the runReact.sh bash script

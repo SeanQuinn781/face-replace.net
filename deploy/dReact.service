@@ -1,0 +1,9 @@
+[Unit]
+Description = react command to run client as daemon
+
+[Service]
+ExecStart = /home/ibex/Github/face-replace/client/runReact.sh
+
+[Install]
+WantedBy = multi-user.target
+
