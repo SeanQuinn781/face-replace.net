@@ -28,7 +28,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "/home/ibex/Github/face-replace/server/app/static"
+UPLOAD_FOLDER = "/path/to/your/app/static"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # with open(".config.json") as f:
 #    config = json.load(f)
