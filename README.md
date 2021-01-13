@@ -3,6 +3,7 @@
 
 # Description
 Simple react/ flask webapp that can be run fully locally for replacing all faces in images and video
+Live version available at face-replace.net (WIP, may not be 100% stable)
 
 # Overview
 
