@@ -1,9 +1,11 @@
 <img src="demos/logo.png" align="center" />
 
+# face-replace.net Live Version is now available online 
+### (Improvements to come, may not be 100% stable)
+
 
 # Description
 Simple react/ flask webapp that can be run fully locally for replacing all faces in images and video
-Live version available at face-replace.net (WIP, may not be 100% stable)
 
 # Overview
 
