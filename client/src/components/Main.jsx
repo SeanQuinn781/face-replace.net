@@ -136,7 +136,7 @@ class Main extends React.Component {
                 </select>
               </div>
               <p className="pInstructions my-4">3. Select scale scale resolution for faster processing</p>
-              <p className="pInstructions my-4">(To increase accuracy use original size)</p>
+              <p className="pInstructions my-4">(NOTE: To increase accuracy try different resolutions)</p>
 
               <div>
                 <select
