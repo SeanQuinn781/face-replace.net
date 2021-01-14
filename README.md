@@ -1,10 +1,5 @@
 # [https://face-replace.net](https://face-replace.net) Live site now available
 
-<img src="demos/logo.png" align="center" />
-
- 
-
-
 # Description
 Simple react/ flask webapp that can be run fully locally for replacing all faces in images and video
 
