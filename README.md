@@ -1,5 +1,4 @@
-# [https://face-replace.net](https://face-replace.net)
-Live site now available
+# [https://face-replace.net](https://face-replace.net) Live site now available
 
 <img src="demos/logo.png" align="center" />
 
