@@ -1,8 +1,8 @@
 [Unit]
-Description = flask pyhton command to run app
+Description = Python Flask service to run the app backend
 
 [Service]
-ExecStart = /home/ibex/Github/face-replace/server/runFlask.sh
+ExecStart = /var/www/html/face-replace/server/runFlask.sh
 
 [Install]
 WantedBy = multi-user.target

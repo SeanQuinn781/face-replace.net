@@ -56,6 +56,7 @@ class Main extends React.Component {
       data.append('replacement', this.state.replacement);
       data.append('fileType', mType)
 
+      console.log('filename is ', this.fileName.value);
       // Processing of the flask response differs depending on the filetype
       // (image or video) in order to render the finished results 
       if (mType && mType === 'video') {
@@ -75,11 +76,7 @@ class Main extends React.Component {
       }
       // if image render processed file
       else if (mType && mType === 'image') {
-        fetch('/upload', { 
-	   method: 'POST', 
-	   body: data, 
-	   mode: 'cors',
-	})
+        fetch('http://0.0.0.0:5000/upload', { method: 'POST', body: data })
           .then(response => response.blob())
           .then((blob) => {
             let reader = new FileReader();
@@ -88,8 +85,19 @@ class Main extends React.Component {
               let contents = reader.result;
               // hide loading animation
               this.setState({ fileProcessing: false })
-              //
-              this.setState({ imageUrl: contents })
+              // try using path here, uncommenting this 8-3-21
+	      
+	      // this.setState({ imageUrl: contents })
+	      console.log('strPath', this.fileName.value)
+	      let imgFilePath=this.fileName.value
+	      // remove C:\fakepath\ from file path
+	      imgFilePath=imgFilePath.slice(12);
+	      // append real file path
+	      // let fullImgFilePath=`/var/www/html/face-replace/server/app/static/${imgFilePath}`;
+	      // let fullImgFilePath=`../../../server/app/static/${imgFilePath}`;
+	      let fullImgFilePath=`../../public/${imgFilePath}`;
+	      // console.log('strPath',fullImgFilePath)
+	      this.setState({ imageUrl: imgFilePath});
             })
             // pass valid blob to FileReader
             if (blob instanceof Blob) reader.readAsDataURL(blob)

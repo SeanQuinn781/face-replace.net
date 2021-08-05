@@ -7,5 +7,5 @@ if __name__ == "__main__":
     app.config["SESSION_TYPE"] = "filesystem"
     # session.init_app(app)
     print("app is ", app)
-    app.run(host="http://0.0.0.0:5000/", debug=True)
-    app.run()
+    app.run(host="0.0.0.0")
+    # app.run()

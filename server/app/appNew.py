@@ -3,6 +3,7 @@ import os
 import asyncio
 from flask import Flask, request, redirect, session, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
+# from flask_cors import CORS
 from flask_cors import CORS
 import argparse
 import glob
@@ -28,12 +29,13 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-# UPLOAD_FOLDER = "/var/www/html/face-replace/client/public"
-UPLOAD_FOLDER="/var/www/html/face-replace/client/public"
+CORS(app)
+# UPLOAD_FOLDER = "/var/www/html/face-replace/client/src/components"
+UPLOAD_FOLDER = "/var/www/html/face-replace/client/public"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # with open(".config.json") as f:
 #    config = json.load(f)
-configVal = '{"SECRET_KEY": "vZ3HJbDJW2CgzA!"}'
+configVal = '{"SECRET_KEY": "dfodufbDoedTaverns!"}'
 config = json.loads(configVal)
 app.config.update(config)
 env_path = Path(".") / ".env"
@@ -42,7 +44,7 @@ load_dotenv(dotenv_path=env_path)
 app.config["DEBUG"] = True
 app.config["MAX_CONTENT_LENGTH"] = 50 * 1024 * 1024  # 50 Mb limit
 # Expose cors headers to enable file download
-CORS(app, expose_headers="Authorization")
+# CORS(app, expose_headers="Authorization")
 
 
 def validate_image(stream):
@@ -72,7 +74,7 @@ def fileUpload():
     file_ext = filename.split(".")[0]
     if file_ext != validate_image(file.stream):
         print("Failure: Image extension filetype not recognized")
-
+        sys.exit()
     destination = "/".join([f_path, filename])
     file.save(destination)
     file_length = os.stat(destination).st_size
@@ -82,7 +84,7 @@ def fileUpload():
     print("mime is ", mime)
     if mime is None:
         return None
-
+        sys.exit()
     processed_file_title = filename.split(".")[0]
     processed_file_ext = filename.split(".")[1]
     processed_file_name = (
@@ -118,6 +120,7 @@ def fileUpload():
     else:
         print("unknown mimetype")
         return ""
+        sys.exit()
 
 
 # uncomment for debug
@@ -270,5 +273,6 @@ def face_replace(file, file_replacement, filetype, emoji, file_scale):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=5050)
-#    main()
+    
+    app.run(host="0.0.0.0")
+    main()
