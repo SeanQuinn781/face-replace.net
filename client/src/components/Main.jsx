@@ -42,6 +42,7 @@ class Main extends React.Component {
       let mType = MimeType.lookup(this.uploadInput.files[0].name)
 
       if (mType) {
+	      console.log('mimetype is ', mType)
         mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
       } else {
         // uncomment this to allow some filetypes regardless of mimetype detection failure (such as mkv)
@@ -49,51 +50,66 @@ class Main extends React.Component {
         console.log('unable to detect mimetype in the uploader')
       }
 
+
+
       // Append form data to data obj before passing to flask
       data.append('file', this.uploadInput.files[0]);
       data.append('filename', this.fileName.value);
       data.append('scale', this.state.scale);
       data.append('replacement', this.state.replacement);
       data.append('fileType', mType)
+      console.log('filename w fake ', this.fileName.value)
 
+
+      let currentFileName = this.fileName.value;
+      currentFileName= currentFileName.slice(12);
+      currentFileName = currentFileName.split('.')
+      let currentFileExt = currentFileName.pop();
+      currentFileName = currentFileName[0];
+      currentFileName = currentFileName  + '_' + this.state.replacement + '.' + currentFileExt;
+      console.log('now filename is ', currentFileName);
       // Processing of the flask response differs depending on the filetype
       // (image or video) in order to render the finished results 
       if (mType && mType === 'video') {
-
         fetch('/upload', {
           method: 'POST',
           body: data,
           mode: 'cors',
         })
-          .then((response) => response.blob())
-          .then((blob) => {
-            // hide loading animation
-            this.setState({ fileProcessing: false })
-            // get video url from blob & set video url in app state for rendering
-            this.setState({ videoUrl: URL.createObjectURL(blob) })
-          })
+        .then((response) => response.blob())
+        .then((blob) => {
+          console.log('posting video');
+          console.log('url is ', URL.createObjectURL(blob))
+          console.log('current file name is ', currentFileName);
+          // hide loading animation
+          this.setState({ fileProcessing: false })
+          // get video url from blob & set video url in app state for rendering
+          // uncommented 8-16-21 this.setState({ videoUrl: URL.createObjectURL(blob) })
+          this.setState({ videoUrl: currentFileName})
+        })
       }
       // if image render processed file
       else if (mType && mType === 'image') {
+	      console.log('posting image');
         fetch('/upload', { 
-	   method: 'POST', 
-	   body: data, 
-	   mode: 'cors',
-	})
-          .then(response => response.blob())
-          .then((blob) => {
-            let reader = new FileReader();
-            // get image url from blob using FileReader
-            reader.addEventListener('loadend', () => {
-              let contents = reader.result;
-              // hide loading animation
-              this.setState({ fileProcessing: false })
-              //
-              this.setState({ imageUrl: contents })
-            })
-            // pass valid blob to FileReader
-            if (blob instanceof Blob) reader.readAsDataURL(blob)
+	        method: 'POST', 
+	        body: data, 
+	        mode: 'cors',
+	      })
+        .then(response => response.blob())
+        .then((blob) => {
+          let reader = new FileReader();
+          // get image url from blob using FileReader
+          reader.addEventListener('loadend', () => {
+            let contents = reader.result;
+            // hide loading animation
+            this.setState({ fileProcessing: false })
+            //
+            this.setState({ imageUrl: contents })
           })
+          // pass valid blob to FileReader
+          if (blob instanceof Blob) reader.readAsDataURL(blob)
+        })
       }
     } else {
       this.handleError('There was an error uploading the files.');
@@ -125,7 +141,34 @@ class Main extends React.Component {
                   }}
                 />
               </div>
-              <p className="pInstructions my-4">2. Choose an effect to replace faces with</p>
+              <p className="pInstructions my-4">2. Choose an effect, or upload another face to replace faces in the image with</p>
+
+              <div>
+                <input 
+                  name="face" 
+                  id="face"
+                  type="radio" 
+                  className="replacementType"
+                  onChange={this.handleRadioChange}
+                  value="face"
+                  checked
+                >
+                <label for="face">Face (Upload a second image containing the face you want to replace in the first image)</label>
+              </div>
+
+              <div>
+                <input
+                  name="effect" 
+                  id="effect" 
+                  type="radio" 
+                  className="replacementType"
+                  onChange={this.handleRadioChange}
+                  value="effect"
+                >
+                <label for="dewey">Effect (Emoji, Box, or Blur)</label>
+              </div>
+
+
               <div>
                 <select
                   name="replacement"

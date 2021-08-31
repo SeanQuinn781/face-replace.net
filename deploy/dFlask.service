@@ -1,9 +1,0 @@
-[Unit]
-Description = Python Flask service to run the app backend
-
-[Service]
-ExecStart = /var/www/html/face-replace/server/runFlask.sh
-
-[Install]
-WantedBy = multi-user.target
-

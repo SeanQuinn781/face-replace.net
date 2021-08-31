@@ -12,6 +12,9 @@ import random
 import time
 import sys
 
+# 8-31-21
+import wsgi
+
 #  deps for processing media
 import imageio
 import imageio.plugins.ffmpeg
@@ -20,9 +23,9 @@ from typing import Dict
 import colorama
 import imghdr
 from colorama import Fore, Style
-
-from .utils.centerface import CenterFace
-from .utils.handle_frames import draw_replacements, process_frame, image_detect
+import utils
+from utils.centerface import CenterFace
+from utils.handle_frames import draw_replacements, process_frame, image_detect
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -33,7 +36,7 @@ UPLOAD_FOLDER="/var/www/html/face-replace/client/public"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # with open(".config.json") as f:
 #    config = json.load(f)
-configVal = '{"SECRET_KEY": "vZ3HJbDJW2CgzA!"}'
+configVal = '{"SECRET_KEY": "dfodoscarSlaughters!"}'
 config = json.loads(configVal)
 app.config.update(config)
 env_path = Path(".") / ".env"
@@ -66,6 +69,8 @@ def fileUpload():
         os.mkdir(f_path)
 
     file = request.files["file"]
+    file_mimetype = file.content_type
+
     file_replacement = request.form.get("replacement")
     file_scale = request.form.get("scale")
     filename = secure_filename(file.filename)
@@ -107,7 +112,7 @@ def fileUpload():
         )
         return send_from_directory(f_path, processed_file_name, as_attachment=True)
 
-    elif mime.startswith("image"):
+    elif mime.startswith("image") and file_mimetype.startswith('image/'):
         if file_replacement == "emoji":
             emoji["type"] = "image"
         face_replace(
@@ -151,17 +156,15 @@ def video_detect(
         meta = reader.get_meta_data()
         _ = meta["size"]
     except:
-        print(
-            Fore.RED
-            + f"Could not open file {ipath} as a video file with imageio. Make sure ffmpeg is installed on system, and try converting video to MP4 format"
-        )
-        return
+       print(Fore.RED+ f"Could not open file {ipath} as a video file with imageio. Make sure ffmpeg is installed on system, and try converting video to MP4 format")
+       print('could not open file as a video file')
+       return
 
     read_iter = reader.iter_data()
     nframes = reader.count_frames()
     print("initializing frame sessions")
     session["frames"] = nframes
-    print(Fore.GREEN + "Step 3: Process Frames and Draw Replacements")
+    # print(Fore.GREEN + "Step 3: Process Frames and Draw Replacements")
     if nested:
         bar = tqdm.tqdm(dynamic_ncols=True, total=nframes, position=1, leave=True)
     else:
@@ -195,7 +198,7 @@ def video_detect(
 
 
 def face_replace(file, file_replacement, filetype, emoji, file_scale):
-    print(Fore.GREEN + "Step 1 Processing file... ", file)
+    # print(Fore.GREEN + "Step 1 Processing file... ", file)
     ipaths = [file]
     base_opath = None
     replacewith = file_replacement
@@ -233,11 +236,11 @@ def face_replace(file, file_replacement, filetype, emoji, file_scale):
         if opath is None:
             root, ext = os.path.splitext(ipath)
             opath = f"{root}_{file_replacement}{ext}"
-        print(Fore.BLUE + f"Input:  {ipath}\nOutput: {opath}")
+        # print(Fore.BLUE + f"Input:  {ipath}\nOutput: {opath}")
         if opath is None:
             print(Fore.RED + "No output file is specified, no output will be produced.")
         if filetype == "video":
-            print(Fore.GREEN + "Step 2: Video Detect")
+            # print(Fore.GREEN + "Step 2: Video Detect")
             video_detect(
                 ipath=ipath,
                 opath=opath,
@@ -251,8 +254,8 @@ def face_replace(file, file_replacement, filetype, emoji, file_scale):
                 ffmpeg_config=ffmpeg_config,
             )
         elif filetype == "image":
-            print(Fore.GREEN + "Step 2: Image Detect")
-            print(Fore.GREEN + "Step 3: Process Frames and Draw Replacements")
+            # print(Fore.GREEN + "Step 2: Image Detect")
+            # print(Fore.GREEN + "Step 3: Process Frames and Draw Replacements")
             image_detect(
                 ipath=ipath,
                 opath=opath,
@@ -265,7 +268,7 @@ def face_replace(file, file_replacement, filetype, emoji, file_scale):
             )
         else:
             print(
-                Fore.RED + f"File {ipath} has an unknown type {filetype}. Skipping..."
+              Fore.RED + f"File {ipath} has an unknown type {filetype}. Skipping..."
             )
 
 

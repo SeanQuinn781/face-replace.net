@@ -1,9 +1,0 @@
-[Unit]
-Description = React service to run the client as a daemon
-
-[Service]
-ExecStart = /var/www/html/face-replace/client/runReact.sh
-
-[Install]
-WantedBy = multi-user.target
-

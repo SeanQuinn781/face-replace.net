@@ -1,6 +1,14 @@
 # -----------------------------------------------/
 Python .gitignore
 
+# locally compiled OpenCV
+OpenCV
+
+server/.env
+
+# ignore local changes to demo files
+demos
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,6 +16,9 @@ __pycache__/
 
 # C extensions
 *.so
+
+# ignore config key
+server/config.json
 
 # Distribution / packaging
 .Python

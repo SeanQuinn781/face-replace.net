@@ -1,0 +1,6 @@
+enable pm2 to run on server reboot with pm2 startup
+
+run the command that it replies with (for example sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u username --hp /home/username)
+
+enter the client directory and (assuming you built the directory for prod deployment with npm run deploy) use pm2 to run the client 
+pm2 -u jo serve build 3000 --spa

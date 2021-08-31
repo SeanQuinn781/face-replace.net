@@ -1,0 +1,35 @@
+server {
+  server_name face-replace.net;
+  listen 80;
+  listen [::]:80;
+
+  #  root /var/www/html/face-replace/build;
+  root /var/www/html/face-replace/client/build; 
+  index index.html index.htm;
+
+  location / {
+    # try_files $uri $uri/ =404;
+    proxy_pass http://0.0.0.0:3000;
+  }
+
+  # Uncomment for running flask app in dev mode (w.out gunicorn prod systemd service)
+  # location /upload {
+  #   proxy_pass http://127.0.0.1:5000;
+  # }
+
+  # proxy requests to the face-replace backend service socket
+  location /upload {
+    include proxy_params;
+    proxy_pass http://unix:/var/www/html/face-replace/server/app/face-replace.sock;
+  }
+
+    listen [::]:443 ssl ipv6only=on;
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/face-replace.net/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/face-replace.net/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+}
+
+

@@ -7,8 +7,9 @@ import imageio
 import cv2
 import colorama
 from colorama import Fore, Style
-from .centerface import CenterFace
-from .emoji import get_emoji_size, select_emoji
+import utils
+from utils.centerface import CenterFace
+from utils.emoji import get_emoji_size, select_emoji
 
 
 def scale_bb(x1, y1, x2, y2, mask_scale=1.0):
@@ -44,11 +45,16 @@ def draw_replacements(
         # check face dims to decide on emoji size (minimizes resizing necessary)
         emoji_path_extension = get_emoji_size(face_height, face_width)
 
+        print("emoji path extension", emoji_path_extension)
+
+
         if emoji_path_extension:
             emoji["path"] = emoji["base_path"] + emoji_path_extension
         else:
             emoji["path"] = emoji["base_path"]
 
+        print("emoji path is ", emoji["path"])
+    
         # when replacing faces in an img use a different, random emoji for each face
         if emoji["type"] == "image":
             emoji["selected"] = select_emoji()
@@ -60,9 +66,12 @@ def draw_replacements(
                 emoji["selected"] = select_emoji()
             if not len(emoji["selected"]) > 2:
                 print("no emoji selected, emoji is ", emoji)
+
         # combine emoji and path, read image with cv2
         emoji_location = emoji["path"] + emoji["selected"]
+        print(emoji_location)
         emoji_img = cv2.imread(emoji_location)
+        print('emoji img ', emoji_img)
         (emoji_height, emoji_width,) = emoji_img.shape[:2]
 
         # use the greater dim from face to determine emoji height / width

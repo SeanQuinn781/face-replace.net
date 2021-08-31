@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve face-replace backend
+After=network.target
+
+[Service]
+User=jo
+Group=www-data
+WorkingDirectory=/var/www/html/face-replace/server/app
+Environment="PATH=/var/www/html/face-replace/server/venv/bin"
+ExecStart=/var/www/html/face-replace/server/venv/bin/gunicorn --workers 3 --bind unix:face-replace.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
