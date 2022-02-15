@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "eslint-config-airbnb": "^18.2.1",
     "http-proxy-middleware": "^1.0.6",
-    "material-ui": "^0.15.0",
+    "material-ui": "^0.20.0",
     "mimetype": "0.0.8",
     "nodemon": "^2.0.12",
     "pm2": "^5.1.1",
