@@ -18,7 +18,7 @@ Pillow==9.3.0
 python-dotenv
 requests==2.26.0
 scikit-image==0.18.2
-scipy==1.7.1
+scipy==1.10.0
 tqdm==4.62.2
 Werkzeug==2.2.3
 zipp==3.5.0
