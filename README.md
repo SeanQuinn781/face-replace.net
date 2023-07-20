@@ -55,9 +55,16 @@ Demo of image, large crowd with boxes effect
 
   Run the Client:
 
-  '''
-  npm start
-  '''
+
+  Due to a bug in react app thats been around for a couple years you cant run the client and make requests to another port/proxy (in this case the back end flask API running on port 5000) without passing this option:
+
+  
+  ```
+     DANGEROUSLY_DISABLE_HOST_CHECK=true npm start
+  ```
+
+  For more info on the bug see: https://github.com/facebook/create-react-app/issues/12304#issuecomment-1376849725
+
 
   Edit the file config.json in the server/ directory, and update the SECRET_KEY used for flask debugging. 
 

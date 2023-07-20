@@ -1,7 +1,7 @@
 # remove onxx imports if using opencv backend
 import onnx
 import onnx.utils
-import onnxruntime
+# uncomment this testing on a mac import onnxruntime
 import cv2
 import datetime
 import os

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
 import Loader from 'react-loader-spinner';
-import MimeType from 'mimetype';
 
 class Main extends React.Component {
 
@@ -39,11 +38,17 @@ class Main extends React.Component {
       this.setState({ fileProcessing: true })
 
       // Check mimetype, determine if upload media is an img or video
-      let mType = MimeType.lookup(this.uploadInput.files[0].name)
+      // this package is no longer supported, and is why sometimes its better not to use tiny utils in npm :-)
+      // NOTE removing this broken dependency: let mType = mime.lookup(this.uploadInput.files[0].name)
 
-      if (mType) {
-	      console.log('mimetype is ', mType)
-        mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
+      var ext = a.split(".")[1];
+
+      if (ext) {
+	      console.log('ext is ', ext)
+        // mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
+        if (ext.includes("png") || ext == ".jpg" || ext == "jpeg") {
+          let mType = 'image';
+        }
       } else {
         // uncomment this to allow some filetypes regardless of mimetype detection failure (such as mkv)
         // this.handleError('Unable to detect file mimetype in the uploader')
@@ -139,7 +144,7 @@ class Main extends React.Component {
                     this.uploadInput = ref;
                     this.fileName = ref;
                   }}
-                />
+                ></input>
               </div>
               <p className="pInstructions my-4">2. Choose an effect, or upload another face to replace faces in the image with</p>
 
@@ -152,7 +157,7 @@ class Main extends React.Component {
                   onChange={this.handleRadioChange}
                   value="face"
                   checked
-                >
+                ></input>
                 <label for="face">Face (Upload a second image containing the face you want to replace in the first image)</label>
               </div>
 
@@ -164,7 +169,7 @@ class Main extends React.Component {
                   className="replacementType"
                   onChange={this.handleRadioChange}
                   value="effect"
-                >
+                ></input>
                 <label for="dewey">Effect (Emoji, Box, or Blur)</label>
               </div>
 
