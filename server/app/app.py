@@ -31,12 +31,19 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-# UPLOAD_FOLDER = "/var/www/html/face-replace/client/public"
-UPLOAD_FOLDER="/var/www/html/face-replace/client/public"
+
+# Note change this to the correct path on your machine
+UPLOAD_FOLDER="/Users/sean/Documents/projects/fr/client/public"
+
+print("Uploading file to: ", UPLOAD_FOLDER)
+print("NOTE: Make sure your upload folder is correct or the file will not be processed!")
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
 # with open(".config.json") as f:
 #    config = json.load(f)
-configVal = '{"SECRET_KEY": "dfodoscarSlaughters!"}'
+configVal = '{"SECRET_KEY": "dfodoscajhbg8o6gers!"}'
 config = json.loads(configVal)
 app.config.update(config)
 env_path = Path(".") / ".env"
@@ -273,5 +280,5 @@ def face_replace(file, file_replacement, filetype, emoji, file_scale):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=5050)
+    app.run(host='0.0.0.0', debug=True, port=5000)
 #    main()
