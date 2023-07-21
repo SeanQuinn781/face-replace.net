@@ -40,14 +40,15 @@ class Main extends React.Component {
       // Check mimetype, determine if upload media is an img or video
       // this package is no longer supported, and is why sometimes its better not to use tiny utils in npm :-)
       // NOTE removing this broken dependency: let mType = mime.lookup(this.uploadInput.files[0].name)
+      let fileName = this.uploadInput.files[0].name;
+      let fileExt = fileName.split(".")[1];
+      let fileType;
 
-      var ext = a.split(".")[1];
-
-      if (ext) {
-	      console.log('ext is ', ext)
+      if (fileExt) {
+	      console.log('ext is ', fileExt)
         // mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
-        if (ext.includes("png") || ext == ".jpg" || ext == "jpeg") {
-          let mType = 'image';
+        if (fileExt.includes("png") || fileExt == "jpg" || fileExt == "jpeg") {
+          let fileType = 'image';
         }
       } else {
         // uncomment this to allow some filetypes regardless of mimetype detection failure (such as mkv)
@@ -62,7 +63,7 @@ class Main extends React.Component {
       data.append('filename', this.fileName.value);
       data.append('scale', this.state.scale);
       data.append('replacement', this.state.replacement);
-      data.append('fileType', mType)
+      data.append('fileType', fileType)
       console.log('filename w fake ', this.fileName.value)
 
 
@@ -75,7 +76,7 @@ class Main extends React.Component {
       console.log('now filename is ', currentFileName);
       // Processing of the flask response differs depending on the filetype
       // (image or video) in order to render the finished results 
-      if (mType && mType === 'video') {
+      if (fileType && fileType === 'video') {
         fetch('/upload', {
           method: 'POST',
           body: data,
@@ -94,7 +95,7 @@ class Main extends React.Component {
         })
       }
       // if image render processed file
-      else if (mType && mType === 'image') {
+      else if (fileType && fileType === 'image') {
 	      console.log('posting image');
         fetch('/upload', { 
 	        method: 'POST', 
@@ -131,7 +132,6 @@ class Main extends React.Component {
       <div className="container-fluid customMaxWidth">
         <div className="row">
           <div className="col-12 ">
-            <h3 id="logoHeader" className="mt-4" alt="logoHeader">Face-Replace</h3>
             <form id="mainForm" onSubmit={this.handleUpload}>
               <p className="pInstructions my-4">1. Choose an image or video to upload by clicking Select File </p>
               <div>
@@ -147,20 +147,6 @@ class Main extends React.Component {
                 ></input>
               </div>
               <p className="pInstructions my-4">2. Choose an effect, or upload another face to replace faces in the image with</p>
-
-              <div>
-                <input 
-                  name="face" 
-                  id="face"
-                  type="radio" 
-                  className="replacementType"
-                  onChange={this.handleRadioChange}
-                  value="face"
-                  checked
-                ></input>
-                <label for="face">Face (Upload a second image containing the face you want to replace in the first image)</label>
-              </div>
-
               <div>
                 <input
                   name="effect" 
