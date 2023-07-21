@@ -11,6 +11,7 @@ class Main extends React.Component {
       fileUploaded: false,
       fileProcessing: false,
       videoUrl: false,
+      fileType: "image",
       imageUrl: false,
       replacement: 'emoji',
       scale: 'default',
@@ -49,6 +50,7 @@ class Main extends React.Component {
         // mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
         if (fileExt.includes("png") || fileExt == "jpg" || fileExt == "jpeg") {
           let fileType = 'image';
+          this.setState({ fileType: "image" })
         }
       } else {
         // uncomment this to allow some filetypes regardless of mimetype detection failure (such as mkv)
@@ -75,7 +77,10 @@ class Main extends React.Component {
       currentFileName = currentFileName  + '_' + this.state.replacement + '.' + currentFileExt;
       console.log('now filename is ', currentFileName);
       // Processing of the flask response differs depending on the filetype
-      // (image or video) in order to render the finished results 
+      // (image or video) in order to render the finished results
+      
+      console.log('here checking fileType, fileType is: ', fileType)
+
       if (fileType && fileType === 'video') {
         fetch('/upload', {
           method: 'POST',

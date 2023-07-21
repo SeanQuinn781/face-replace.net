@@ -64,7 +64,7 @@ def validate_image(stream):
     return "." + (format if format != "jpeg" else "jpg")
 
 
-@app.route("/upload", methods=["GET", "POST"])
+@app.route("/upload", methods=["POST"])
 def fileUpload():
     if request.method == "POST":
         if "file" not in request.files:
@@ -280,5 +280,6 @@ def face_replace(file, file_replacement, filetype, emoji, file_scale):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    # host='0.0.0.0', 
+    app.run(debug=True, port=5000)
 #    main()
