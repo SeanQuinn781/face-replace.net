@@ -43,16 +43,19 @@ class Main extends React.Component {
       // NOTE removing this broken dependency: let mType = mime.lookup(this.uploadInput.files[0].name)
       let fileName = this.uploadInput.files[0].name;
       let fileExt = fileName.split(".")[1];
+      console.log('now fileExt is: ', fileExt)
       let fileType;
 
       if (fileExt) {
 	      console.log('ext is ', fileExt)
         // mType = mType.split('/')[0] === 'image' ? 'image' : 'video'
         if (fileExt.includes("png") || fileExt == "jpg" || fileExt == "jpeg") {
-          let fileType = 'image';
+          fileType = 'image';
           this.setState({ fileType: "image" })
         }
       } else {
+        fileType = 'video';
+        this.setState({ fileType: "video" })
         // uncomment this to allow some filetypes regardless of mimetype detection failure (such as mkv)
         // this.handleError('Unable to detect file mimetype in the uploader')
         console.log('unable to detect mimetype in the uploader')

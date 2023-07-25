@@ -23,6 +23,9 @@ class CenterFace:
         self.onnx_input_name = "input.1"
         self.onnx_output_names = ["537", "538", "539", "540"]
 
+        # note trying opencv backend 7-25-23
+        backend = "opencv"
+
         if onnx_path is None:
             onnx_path = default_onnx_path
 

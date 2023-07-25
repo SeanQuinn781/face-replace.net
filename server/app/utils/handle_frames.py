@@ -42,6 +42,8 @@ def draw_replacements(
         # get dims of face to be replaced
         face_height, face_width = frame[y1:y2, x1:x2].shape[:2]
 
+        print('face_width and height: ', face_width, face_height)
+
         # check face dims to decide on emoji size (minimizes resizing necessary)
         emoji_path_extension = get_emoji_size(face_height, face_width)
 
