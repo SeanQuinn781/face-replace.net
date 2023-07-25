@@ -1,7 +1,7 @@
 # remove onxx imports if using opencv backend
 import onnx
 import onnx.utils
-# uncomment this testing on a mac import onnxruntime
+import onnxruntime
 import cv2
 import datetime
 import os
@@ -22,9 +22,6 @@ class CenterFace:
         self.in_shape = in_shape
         self.onnx_input_name = "input.1"
         self.onnx_output_names = ["537", "538", "539", "540"]
-
-        # note trying opencv backend 7-25-23
-        backend = "opencv"
 
         if onnx_path is None:
             onnx_path = default_onnx_path
@@ -51,7 +48,7 @@ class CenterFace:
 
             static_model = onnx.load(onnx_path)
             dyn_model = self.dynamicize_shapes(static_model)
-            dyn_model = onnx.utils.polish_model(dyn_model)
+            # dyn_model = onnx.utils.polish_model(dyn_model)
             self.sess = onnxruntime.InferenceSession(dyn_model.SerializeToString())
 
             preferred_provider = self.sess.get_providers()[0]
