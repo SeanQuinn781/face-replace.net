@@ -40,6 +40,7 @@ def draw_replacements(
     elif replacewith == "emoji":
 
         # get dims of face to be replaced
+        print('frame is: ', frame)
         face_height, face_width = frame[y1:y2, x1:x2].shape[:2]
 
         print('face_width and height: ', face_width, face_height)

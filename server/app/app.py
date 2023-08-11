@@ -112,6 +112,7 @@ def fileUpload():
     }
 
     if mime.startswith("video"):
+        print("processing video in app.py")
         if file_replacement == "emoji":
             emoji["type"] = "video"
         face_replace(
@@ -120,6 +121,7 @@ def fileUpload():
         return send_from_directory(f_path, processed_file_name, as_attachment=True)
 
     elif mime.startswith("image") and file_mimetype.startswith('image/'):
+        print("processing img in app.py")
         if file_replacement == "emoji":
             emoji["type"] = "image"
         face_replace(
