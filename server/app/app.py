@@ -64,7 +64,7 @@ def validate_image(stream):
     return "." + (format if format != "jpeg" else "jpg")
 
 
-@app.route("/upload", methods=["POST"])
+@app.route("/upload", methods=["POST", "GET"])
 def fileUpload():
     if request.method == "POST":
         if "file" not in request.files:

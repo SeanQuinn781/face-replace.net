@@ -72,7 +72,9 @@ def draw_replacements(
 
         # combine emoji and path, read image with cv2
         emoji_location = emoji["path"] + emoji["selected"]
+        print("how is emoji location different than path/ why is it needed?, location is: ", emoji_location)
         print(emoji_location)
+        print("Attempting to read the image located at: ", emoji_location)
         emoji_img = cv2.imread(emoji_location)
         print('emoji img ', emoji_img)
         (emoji_height, emoji_width,) = emoji_img.shape[:2]
